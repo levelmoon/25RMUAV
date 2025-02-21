@@ -1,0 +1,3 @@
+<launch>
+    <node name="vins_estimator" pkg="vins_gz" type="vins_node" output="screen" args="/home/levelmoon/SLAM/VIO_ws/src/VINS-Fusion/config/LOCXXXXXXXXXXX/LOCXXXXX.yaml" />
+</launch>

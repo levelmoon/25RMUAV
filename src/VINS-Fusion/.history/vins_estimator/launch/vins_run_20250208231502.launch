@@ -1,0 +1,5 @@
+<launch>
+    <node name="vins_estimator" pkg="vins_rmua25" type="vins_node" output="screen" args="/home/levelmoon/Drone/RM25/UZH_rotor/src/VINS-Fusion/config/rmua25/rmua25.yaml" />
+    <!-- <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find vins)/../config/vins_rviz_config.rviz" /> -->
+    <!-- <node name="globalEstimator" pkg="global_fusion_rmua25" type="global_fusion_node" output="screen"/> -->
+</launch>

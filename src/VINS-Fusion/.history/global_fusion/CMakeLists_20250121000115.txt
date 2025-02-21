@@ -1,0 +1,52 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(global_fusion_rmua25)
+
+set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_CXX_FLAGS "-std=c++14")
+#-DEIGEN_USE_MKL_ALL")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g")
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  geometry_msgs
+)
+
+# find_package(Ceres REQUIRED)
+include_directories("/usr/local/include/eigen3")
+set(CERES_OTHER_ROOT /home/levelmoon/SLAM/PX4_frame/ceres-solver/install)
+list(APPEND CMAKE_PREFIX_PATH ${CERES_OTHER_ROOT})
+
+find_package(Ceres REQUIRED) 
+include_directories(${CERES_INCLUDE_DIRS})
+
+find_package(glog REQUIRED)
+include_directories(${GLOG_INCLUDE_DIRS})
+# if (GLOG_FOUND)
+#     message(STATUS "Glog library found.")
+#     message(STATUS "Glog includes at ${GLOG_INCLUDE_DIR}")
+# else()
+#     message(FATAL_ERROR "Glog library is needed but cant be found.")
+# endif()
+
+
+add_subdirectory(./ThirdParty/GeographicLib/)
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${CERES_INCLUDE_DIRS}
+  ./ThirdParty/GeographicLib/include/
+)
+
+
+catkin_package()
+
+
+add_executable(global_fusion_node 
+	src/globalOptNode.cpp
+	src/globalOpt.cpp)
+
+
+# target_link_libraries(global_fusion_node ${catkin_LIBRARIES} ${CERES_LIBRARIES} libGeographiccc) 
+target_link_libraries(global_fusion_node ${catkin_LIBRARIES} ${CERES_LIBRARIES}  glog::glog libGeographiccc) 
